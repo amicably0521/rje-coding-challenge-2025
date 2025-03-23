@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Contact } from 'src/app/models/contact.model';
 import { ContactService } from 'src/app/services/contact.service';
-import { State, selectActiveContact, selectContactList } from '../../state';
+import { State, selectActiveContact, selectContactList, selectContactsLoading} from '../../state';
 import * as actions from '../../state/actions';
 
 
@@ -16,13 +16,16 @@ export class ContactListComponent {
 
   contactList$: Observable<Contact[]>;
   activeContact$: Observable<Contact | undefined>;
+  loading$: Observable<boolean>;
 
   constructor(
     private contactService : ContactService,
     private store : Store<State>
   ){
-    this.contactList$ = this.store.select(selectContactList)
+    this.loading$ = this.store.select(selectContactsLoading);
+    this.contactList$ = this.store.select(selectContactList);
     this.activeContact$ = this.store.select(selectActiveContact);
+    this.store.dispatch(actions.loadContacts());
   }
 
   viewContactClicked(contactId : number ){

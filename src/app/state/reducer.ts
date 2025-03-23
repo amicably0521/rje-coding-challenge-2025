@@ -6,11 +6,13 @@ import * as _ from 'lodash';
 export interface State {
     contactList : Contact[];
     selectedContactId : number | null;
+    loading : boolean;
 }
 
 const initialState: State = {
     contactList : [],
-    selectedContactId : null
+    selectedContactId : null,
+    loading : false
 }
 
 //#region Helper Functions
@@ -28,9 +30,15 @@ function upsertContactList(contactList: Contact[], updatedContact: Contact): Con
 
 export const reducer = createReducer(
     initialState,
+    on(actions.loadContacts, (state) => ({
+        ...state,
+        loading: true
+    })),
+
     on(actions.contactListReturned, (state, action) => ({
         ...state,
-        contactList : action.contactList
+        contactList : action.contactList,
+        loading: false
     })),
 
     on(actions.contactSavedSuccess, (state, action) => ({

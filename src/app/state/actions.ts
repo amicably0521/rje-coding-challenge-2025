@@ -5,6 +5,10 @@ export const appStarted = createAction(
     '[APP] Contacts App Initialised'
 );
 
+export const loadContacts = createAction(
+    '[CONTACT LIST] Load Contacts'
+)
+
 export const contactListReturned = createAction(
     '[BACKEND SERVICE] Contact List Returned Successfully',
     props<{contactList: Contact[]}>()

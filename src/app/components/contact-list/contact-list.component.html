@@ -11,7 +11,12 @@
 ></app-contact-detail> -->
 
 
-<div *ngFor="let contact of contactList$ | async" class="contact-list-item">
+<div *ngIf="loading$ | async; else contactList">
+  <p>Loading, please wait...</p>
+</div>
+
+<ng-template #contactList>
+  <div *ngFor="let contact of contactList$ | async" class="contact-list-item">
     <h3>{{ contact.firstName }} {{ contact.lastName }}</h3>
     <div class="contact-actions">
       <button type="button" class="btn-primary" (click)="viewContactClicked(contact.id)">View Details</button>
@@ -20,4 +25,4 @@
   </div>
   
 <app-contact-detail [contact]="activeContact$ | async"></app-contact-detail>
-  
+</ng-template>
