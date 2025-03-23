@@ -16,6 +16,7 @@
 </div>
 
 <ng-template #contactList>
+  <button type="button" class="btn-secondary" (click)="addContactClicked()">Add Contact</button>
   <div *ngFor="let contact of contactList$ | async" class="contact-list-item">
     <h3>{{ contact.firstName }} {{ contact.lastName }}</h3>
     <div class="contact-actions">
